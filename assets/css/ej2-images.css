@@ -1,0 +1,134 @@
+:root {
+  --azul-capa: 15, 75, 160;
+  --color-texto: #ffffff;
+  --ancho-maximo: 1200px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  line-height: 1.6;
+  background-color: #f2f5f8;
+  color: #202833;
+}
+
+.contenedor {
+  width: min(100% - 2rem, var(--ancho-maximo));
+  margin-inline: auto;
+  padding-block: 2rem;
+}
+
+h1 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+/* Contenedor principal */
+.figura-editorial {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+
+  min-height: 28rem;
+  aspect-ratio: 16 / 9;
+  margin: 0;
+
+  /* Color de respaldo si la imagen falla */
+  background-color: #18304f;
+
+  border-radius: 1rem;
+  overflow: hidden;
+  color: var(--color-texto);
+}
+
+/* Capa 1: fotografía detrás del contenido */
+.figura-editorial::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+
+  background-image: url("https://cdn.pixabay.com/photo/2017/08/10/08/47/laptop-2620118_1280.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Capa 2: filtro azul semitransparente */
+.figura-editorial::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background-color: rgba(var(--azul-capa), 0.65);
+}
+
+/* Texto sobre ambas capas */
+.figura-editorial__caption {
+  position: relative;
+  width: 100%;
+  padding: clamp(1.5rem, 5vw, 4rem);
+}
+
+.figura-editorial__etiqueta {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.figura-editorial__caption h2 {
+  max-width: 18ch;
+  margin-block: 0 1rem;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.figura-editorial__caption p:last-child {
+  max-width: 55ch;
+}
+
+/* Adaptación para tablet y móvil */
+@media (max-width: 768px) {
+  .figura-editorial {
+    min-height: 24rem;
+    aspect-ratio: 4 / 3;
+  }
+
+  .figura-editorial::before {
+    background-position: 60% center;
+  }
+
+  .figura-editorial::after {
+    /* Degradado azul más oscuro en la zona del texto */
+    background: linear-gradient(
+      0deg,
+      rgba(var(--azul-capa), 0.95),
+      rgba(var(--azul-capa), 0.35)
+    );
+  }
+}
+
+@media (max-width: 480px) {
+  .contenedor {
+    width: calc(100% - 1.25rem);
+    padding-block: 1rem;
+  }
+
+  .figura-editorial {
+    min-height: 25rem;
+    aspect-ratio: auto;
+  }
+
+  .figura-editorial__caption {
+    padding: 1.25rem;
+  }
+}

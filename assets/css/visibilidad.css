@@ -1,0 +1,57 @@
+/* Visible a todos los lectores de pantalla
+	http://www.cssmojo.com/hide-content-from-sighted-users/
+	Sirve para ocultar a la vista pero visible en Validator, 
+	buscadores y otros robots.
+*/
+
+.pechado {
+    position: absolute !important;
+    clip    : rect(1px 1px 1px 1px); // IE6, IE7
+    clip    : rect(1px, 1px, 1px, 1px);
+    padding : 0 !important;
+    border  : 0 !important;
+    height  : 0px !important;
+    width   : 0px !important;
+    overflow: hidden;
+}
+
+/* Otra técnica habitual en accesibilidad web (WCAG) 
+para proporcionar información adicional 
+a las personas que utilizan tecnologías de asistencia */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* Variante accesible: oculta excepto al focus*/
+
+/* Utilizada en enlaces "Saltar al contenido"
+	ou outros textos no visibles al ojo humano
+	Para facilitar la accesibilidad, 
+	Así permanece oculto visualmente, 
+	pero aparece cuando recibe el foco mediante teclado.
+*/
+
+.visually-hidden:not(:focus):not(:active) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+
+    white-space: nowrap;
+    border: 0;
+}

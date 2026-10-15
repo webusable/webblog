@@ -1,0 +1,233 @@
+/* ==========================================
+   1. CONFIGURACIÓN GENERAL
+   ========================================== */
+
+/* Facilita el cálculo de dimensiones de los elementos. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  color: #ffffff;
+
+  /* Color de respaldo general de la página. */
+  background-color: #f1f5f9;
+}
+
+/* Limita el ancho del componente y lo centra. */
+.contenedor {
+  width: min(100% - 2rem, 1200px);
+  margin: 3rem auto;
+}
+
+/* ==========================================
+   2. FIGURE: CONTENEDOR PRINCIPAL
+   ========================================== */
+
+.figure-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  /* Altura mínima adaptable al contenido. */
+  min-height: 420px;
+
+  display: flex;
+  align-items: center;
+
+  /* Separación interior para el texto. */
+  padding: clamp(1.5rem, 5vw, 4rem);
+
+  /* 
+       IMPORTANTE:
+       Color de respaldo por si falla la imagen.
+       También proporciona una base azul al componente.
+    */
+  background-color: #123c78;
+
+  border-radius: 1.25rem;
+  margin: 0;
+
+  /* Evita que el contenido se desborde visualmente. */
+  box-shadow: 0 12px 35px rgb(15 23 42 / 18%);
+}
+
+/* ==========================================
+   3. IMAGEN DE FONDO Y CAPA AZUL
+   ========================================== */
+
+.figure-hero::before {
+  content: "";
+
+  /* Ocupa toda la superficie del figure. */
+  position: absolute;
+  inset: 0;
+
+  /*
+       El degradado se dibuja sobre la fotografía.
+       Los azules translúcidos tiñen la imagen sin
+       ocultarla completamente.
+
+       La fotografía se carga desde la URL indicada.
+    */
+  background-image:
+    linear-gradient(
+      110deg,
+      rgb(8 35 91 / 88%) 0%,
+      rgb(16 80 160 / 65%) 55%,
+      rgb(25 110 200 / 35%) 100%
+    ),
+    url("https://cdn.pixabay.com/photo/2017/08/10/08/47/laptop-2620118_1280.jpg");
+
+  /* Evita deformaciones y cubre todo el contenedor. */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /*
+       Color de respaldo del propio pseudoelemento.
+       Si no se muestra la imagen, el fondo azul sigue
+       proporcionando contraste y una apariencia coherente.
+    */
+  background-color: #174a8b;
+
+  /* Mantiene la capa por detrás del contenido. */
+  z-index: -1;
+
+  /* Ligero movimiento visual al cambiar el tamaño. */
+  transition: transform 0.5s ease;
+}
+
+/* Efecto sutil al pasar el cursor por el componente. */
+.figure-hero:hover::before {
+  transform: scale(1.04);
+}
+
+/* ==========================================
+   4. CONTENIDO SEMÁNTICO
+   ========================================== */
+
+.figure-hero__contenido {
+  /* Limita la anchura de lectura del texto. */
+  max-width: 650px;
+}
+
+.figure-hero__etiqueta {
+  margin: 0 0 0.75rem;
+
+  color: #bfdbfe;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.figure-hero h1 {
+  margin: 0 0 1rem;
+
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+}
+
+.figure-hero__descripcion {
+  max-width: 55ch;
+  margin: 0 0 1.75rem;
+
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: #eff6ff;
+}
+
+/* ==========================================
+   5. ENLACE DE ACCIÓN
+   ========================================== */
+
+.figure-hero__enlace {
+  display: inline-block;
+  padding: 0.8rem 1.4rem;
+
+  color: #123c78;
+  background-color: #ffffff;
+
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 700;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.figure-hero__enlace:hover {
+  background-color: #dbeafe;
+  transform: translateY(-2px);
+}
+
+/* Foco visible para usuarios que navegan con teclado. */
+.figure-hero__enlace:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 4px;
+}
+
+/* ==========================================
+   6. DISEÑO RESPONSIVE
+   ========================================== */
+
+/* Tabletas y pantallas de tamaño intermedio. */
+@media (max-width: 768px) {
+  .contenedor {
+    width: min(100% - 1.5rem, 1200px);
+    margin: 1.5rem auto;
+  }
+
+  .figure-hero {
+    min-height: 380px;
+    border-radius: 1rem;
+  }
+
+  /* Desplaza el punto de interés de la fotografía. */
+  .figure-hero::before {
+    background-position: 60% center;
+  }
+}
+
+/* Teléfonos móviles. */
+@media (max-width: 480px) {
+  .figure-hero {
+    min-height: 350px;
+    padding: 1.5rem;
+  }
+
+  /*
+       Refuerza el azul de la zona izquierda para que
+       el texto conserve un contraste suficiente.
+    */
+  .figure-hero::before {
+    background-image:
+      linear-gradient(90deg, rgb(8 35 91 / 92%), rgb(16 80 160 / 65%)),
+      url("https://cdn.pixabay.com/photo/2017/08/10/08/47/laptop-2620118_1280.jpg");
+
+    background-position: center;
+  }
+
+  .figure-hero h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Reduce las animaciones si el usuario lo solicita. */
+@media (prefers-reduced-motion: reduce) {
+  .figure-hero::before,
+  .figure-hero__enlace {
+    transition: none;
+  }
+
+  .figure-hero:hover::before {
+    transform: none;
+  }
+}
